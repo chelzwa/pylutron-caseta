@@ -48,7 +48,16 @@ class Smartbridge:
         cmd = {
             "CommuniqueType": "ReadRequest",
             "Header": {"Url": "/server"}}
-        return self._writer.write(cmd)
+        self._writer.write(cmd)
+        enabled = yield from self._reader.read()
+        _LOG.debug('PYLUTRONCASETA ENABLED', str(enabled))
+        enabled2 = yield from self._reader.read()
+        _LOG.debug('PYLUTRONCASETA ENABLED', str(enabled2))
+        enabled3 = yield from self._reader.read()
+        _LOG.debug('PYLUTRONCASETA ENABLED', str(enabled3))
+        enabled4 = yield from self._reader.read()
+        _LOG.debug('PYLUTRONCASETA ENABLED', str(enabled4))
+        return enabled
 
     @asyncio.coroutine
     def connect(self):
