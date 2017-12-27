@@ -35,7 +35,7 @@ class LipWriter(object):
 
     def write(self, cmd):
         """Send a single command."""
-        _LOGGER.debug("Sending: %s" % cmd)
+        _LOG.debug("Sending: %s" % cmd)
 
         try:
           self._telnet.write(cmd.encode('ascii') + b'\r\n')
