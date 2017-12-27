@@ -37,9 +37,9 @@ class Smartbridge:
         self._monitor_task = None
         self._lip = None
 
-    @asyncio.coroutine
     def connect_lip(self, host, port, username, password):
         """Connect to the bridge."""
+        _LOG.info('LIP CONNECTION STARTING')
         lip = login(host, port, username, password)
         _LOG.info('LIP CONNECTED')
         self._lip = lip
