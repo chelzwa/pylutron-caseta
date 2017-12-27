@@ -52,8 +52,8 @@ class Smartbridge:
             "Header": {"Url": "/server"}}
         return self._writer.write(cmd)
 
-    def fade(self, device_id, value, transition_time, delay):
-        cmd = "#OUTPUT," + str(device_id) + ",1," + str(value) + "," + str(int(transition_time)) + "," + str(int(delay))
+    def fade(self, device_id, value, transition_time):
+        cmd = "#OUTPUT," + str(device_id) + ",1," + str(value) + "," + transition_time)
         _LOG.debug(cmd);
         return self._lip.write(cmd)
 
