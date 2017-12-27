@@ -52,7 +52,7 @@ class Smartbridge:
 
     def fade(self, device_id, value, transition_time, delay):
         cmd = "#OUTPUT," + str(device_id) + ",1," + str(value) + "," + str(transition_time) + "," + str(delay)
-        _LOG(cmd);
+        _LOG.debug(cmd);
         return self._lip.write(cmd)
 
     @asyncio.coroutine
