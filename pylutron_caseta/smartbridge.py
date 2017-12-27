@@ -48,16 +48,12 @@ class Smartbridge:
         cmd = {
             "CommuniqueType": "ReadRequest",
             "Header": {"Url": "/server"}}
-        self._writer.write(cmd)
-        enabled = yield from self._reader.read()
-        _LOG.debug('PYLUTRONCASETA ENABLED', str(enabled))
-        enabled2 = yield from self._reader.read()
-        _LOG.debug('PYLUTRONCASETA ENABLED', str(enabled2))
-        enabled3 = yield from self._reader.read()
-        _LOG.debug('PYLUTRONCASETA ENABLED', str(enabled3))
-        enabled4 = yield from self._reader.read()
-        _LOG.debug('PYLUTRONCASETA ENABLED', str(enabled4))
-        return enabled
+        return self._writer.write(cmd)
+
+    def fade(self, device_id, value, transition_time, delay):
+        cmd = "#OUTPUT," + str(device_id) + ",1," + str(value) + "," + str(transition_time) + "," + str(delay)
+        _LOG(cmd);
+        return self._lip.write(cmd)
 
     @asyncio.coroutine
     def connect(self):
@@ -273,7 +269,6 @@ class Smartbridge:
 
         :param resp_json: full JSON response from the LEAP connection
         """
-        _LOG.debug('PYLUTRONCASETA RESPONSE', str(resp_json))
         comm_type = resp_json['CommuniqueType']
         if comm_type == 'ReadResponse':
             body_type = resp_json['Header']['MessageBodyType']

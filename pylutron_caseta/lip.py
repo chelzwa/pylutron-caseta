@@ -23,4 +23,21 @@ def login(host=None, port=None, username=None, password=None):
     
     telnet.read_until(b'GNET> ')
     
-    return telnet
+    return LeapWriter(telnet)
+
+
+class LeapWriter(object):
+    """A wrapper for writing the LIP protocol."""
+
+    def __init__(self, writer):
+        """Initialize the writer."""
+        self._telnet = writer
+
+    def write(self, cmd):
+        """Send a single command."""
+        _LOGGER.debug("Sending: %s" % cmd)
+
+        try:
+          self._telnet.write(cmd.encode('ascii') + b'\r\n')
+        except BrokenPipeError:
+          _LOG.error('BrokenPipeError')
