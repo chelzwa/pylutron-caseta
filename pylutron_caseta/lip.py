@@ -3,6 +3,7 @@
 import asyncio
 import json
 import logging
+import telnetlib
 
 _LOG = logging.getLogger(__name__)
 
