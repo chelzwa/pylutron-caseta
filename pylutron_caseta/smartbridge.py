@@ -41,11 +41,12 @@ class Smartbridge:
     def connect_lip(self, host, port, username, password):
         """Connect to the bridge."""
         lip = yield from login(host, port, username, password)
+        _LOG.info('LIP CONNECTED')
         self._lip = lip
 
     @asyncio.coroutine
     def get_lip_enabled(self):
-        """ Return whether LIP is enabled on the bridge."""
+        """Return whether LIP is enabled on the bridge."""
         cmd = {
             "CommuniqueType": "ReadRequest",
             "Header": {"Url": "/server"}}

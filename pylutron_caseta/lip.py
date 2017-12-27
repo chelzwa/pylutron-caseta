@@ -7,7 +7,6 @@ import logging
 _LOG = logging.getLogger(__name__)
 
 
-@asyncio.coroutine
 def login(host=None, port=None, username=None, password=None):
     telnet = telnetlib.Telnet(host, port)
     
@@ -23,10 +22,10 @@ def login(host=None, port=None, username=None, password=None):
     
     telnet.read_until(b'GNET> ')
     
-    return LeapWriter(telnet)
+    return LipWriter(telnet)
 
 
-class LeapWriter(object):
+class LipWriter(object):
     """A wrapper for writing the LIP protocol."""
 
     def __init__(self, writer):
