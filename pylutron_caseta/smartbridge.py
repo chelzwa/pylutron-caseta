@@ -35,6 +35,7 @@ class Smartbridge:
         self._reader = None
         self._writer = None
         self._monitor_task = None
+        self._lip = None
 
     @asyncio.coroutine
     def connect_lip(self, host, port, username, password):
