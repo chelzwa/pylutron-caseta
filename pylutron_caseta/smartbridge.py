@@ -40,7 +40,7 @@ class Smartbridge:
     @asyncio.coroutine
     def connect_lip(self, host, port, username, password):
         """Connect to the bridge."""
-        lip = yield from login(host, port, username, password)
+        lip = login(host, port, username, password)
         _LOG.info('LIP CONNECTED')
         self._lip = lip
 
