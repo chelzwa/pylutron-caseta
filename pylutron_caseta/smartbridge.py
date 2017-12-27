@@ -7,11 +7,13 @@ import ssl
 
 from . import _LEAP_DEVICE_TYPES
 from .leap import open_connection
+from .lip import login
 
 _LOG = logging.getLogger(__name__)
 _LOG.setLevel(logging.DEBUG)
 
 LEAP_PORT = 8081
+LIP_PORT = 23
 
 
 class Smartbridge:
@@ -33,6 +35,23 @@ class Smartbridge:
         self._reader = None
         self._writer = None
         self._monitor_task = None
+
+    @asyncio.coroutine
+    def connect_lip(self, host, port, username, password):
+        """Connect to the bridge."""
+        lip = yield from login(host, port, username, password)
+        self._lip = lip
+
+    @asyncio.coroutine
+    def get_lip_enabled(self):
+        """ Return whether LIP is enabled on the bridge."""
+        cmd = {
+            "CommuniqueType": "ReadRequest",
+            "Header": {"Url": "/server"}}
+        self._writer.write(cmd)
+        enabled = yield from self._reader.read()
+        _LOG.debug(enabled)
+        return enabled
 
     @asyncio.coroutine
     def connect(self):
