@@ -14,6 +14,8 @@ _LOG.setLevel(logging.DEBUG)
 
 LEAP_PORT = 8081
 LIP_PORT = 23
+LIP_USERNAME = 'lutron'
+LIP_PASSWORD = 'integration'
 
 
 class Smartbridge:
@@ -37,24 +39,14 @@ class Smartbridge:
         self._monitor_task = None
         self._lip = None
 
-    def connect_lip(self, host, port, username, password):
+    def connect_lip(self, host, port=LIP_PORT, username=LIP_USERNAME,
+                    password=LIP_PASSWORD):
         """Connect to the bridge."""
-        _LOG.info('LIP CONNECTION STARTING')
         lip = login(host, port, username, password)
-        _LOG.info('LIP CONNECTED')
         self._lip = lip
-
-    @asyncio.coroutine
-    def get_lip_enabled(self):
-        """Return whether LIP is enabled on the bridge."""
-        cmd = {
-            "CommuniqueType": "ReadRequest",
-            "Header": {"Url": "/server"}}
-        return self._writer.write(cmd)
 
     def fade(self, device_id, value, transition_time):
         cmd = "#OUTPUT," + str(device_id) + ",1," + str(value) + "," + transition_time
-        _LOG.debug(cmd);
         return self._lip.write(cmd)
 
     @asyncio.coroutine
