@@ -273,6 +273,7 @@ class Smartbridge:
 
         :param resp_json: full JSON response from the LEAP connection
         """
+        _LOG.debug('PYLUTRONCASETA RESPONSE', str(resp_json))
         comm_type = resp_json['CommuniqueType']
         if comm_type == 'ReadResponse':
             body_type = resp_json['Header']['MessageBodyType']
