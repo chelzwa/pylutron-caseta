@@ -48,10 +48,7 @@ class Smartbridge:
         cmd = {
             "CommuniqueType": "ReadRequest",
             "Header": {"Url": "/server"}}
-        self._writer.write(cmd)
-        enabled = yield from self._reader.read()
-        _LOG.debug(enabled)
-        return enabled
+        return self._writer.write(cmd)
 
     @asyncio.coroutine
     def connect(self):
